@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>>_ PROMT Chat</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="theme-deep">
+  <div id="terminal">
+    <div id="header">
+      <div class="logo">>_ PROMT</div>
+      <div class="status">online</div>
+    </div>
+    <div id="output"></div>
+    <div id="input-line">
+      <span class="prompt">&gt;_</span>
+      <input type="text" id="user-input" autocomplete="off" placeholder="type your message..." />
+    </div>
+  </div>
+  <audio id="snd-boot" src="sounds/boot.wav" preload="auto"></audio>
+  <audio id="snd-ping" src="sounds/ping.wav" preload="auto"></audio>
+  <script src="script.js"></script>
+</body>
+</html>
