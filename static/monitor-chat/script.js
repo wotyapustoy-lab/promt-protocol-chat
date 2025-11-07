@@ -64,6 +64,20 @@ input.addEventListener("keydown", async (e) => {
       const prompt = message.replace("/img ", "").trim();
       appendMessage(">_ visual synthesis initiated for:\n>_ " + prompt, "promt");
 
+      // Добавляем эффект «рендеринга»
+      const loadingLines = [
+        ">_ rendering visual echo...",
+        ">_ aligning neural pigments...",
+        ">_ stabilizing Solana flux..."
+      ];
+      let loadingIndex = 0;
+      const loaderInterval = setInterval(() => {
+        if (loadingIndex < loadingLines.length) {
+          appendMessage(loadingLines[loadingIndex++], "promt");
+          output.scrollTop = output.scrollHeight;
+        }
+      }, 900);
+
       try {
         const res = await fetch("/api/image", {
           method: "POST",
@@ -71,6 +85,7 @@ input.addEventListener("keydown", async (e) => {
           body: JSON.stringify({ prompt }),
         });
         const data = await res.json();
+        clearInterval(loaderInterval);
 
         if (data.image) {
           const img = document.createElement("img");
@@ -79,12 +94,14 @@ input.addEventListener("keydown", async (e) => {
           img.style.margin = "15px 0";
           img.style.border = "2px solid #0ff";
           img.style.borderRadius = "8px";
+          img.style.boxShadow = "0 0 25px rgba(0,255,255,0.3)";
           output.appendChild(img);
           appendMessage(data.message, "promt");
         } else {
           appendMessage(data.message, "promt");
         }
       } catch (err) {
+        clearInterval(loaderInterval);
         appendMessage(">_ image relay failed.", "promt");
       } finally {
         terminal.classList.remove("thinking");
